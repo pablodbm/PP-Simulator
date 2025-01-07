@@ -8,7 +8,10 @@ public class Elf : Creature
     public int Agility
     {
         get => _agility;
-        private set => _agility = value < 0 ? 0 : value > 10 ? 10 : value;
+        private set
+        {
+            _agility = Validator.Limiter(value, 0, 10);
+        } 
     }
 
     public Elf() { }
@@ -24,6 +27,8 @@ public class Elf : Creature
     {
         Console.WriteLine($"I am {Name}, an elf at level {Level} with agility {Agility}.");
     }
+
+    public override string Info => $"{Name} [{Level}] [Agility: {Agility}]";
 
     public void Sing()
     {
