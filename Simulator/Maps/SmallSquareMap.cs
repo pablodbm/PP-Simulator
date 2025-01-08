@@ -18,10 +18,7 @@
                 _ => p
             };
 
-            if (!Exist(nextPoint))
-                return p;
-
-            return nextPoint;
+            return Exist(nextPoint) ? nextPoint : p;
         }
 
         public override Point NextDiagonal(Point p, Direction d)
@@ -35,10 +32,22 @@
                 _ => p
             };
 
-            if (!Exist(nextPoint))
-                return p;
+            return Exist(nextPoint) ? nextPoint : p;
+        }
 
-            return nextPoint;
+        public void MoveCreature(Creature creature, Direction direction)
+        {
+            if (creature.CurrentMap != this)
+                throw new InvalidOperationException("The creature is not on this map.");
+
+            var currentPoint = creature.CurrentPosition;
+            var nextPoint = Next(currentPoint, direction);
+
+            if (!currentPoint.Equals(nextPoint))
+            {
+                Move(creature, currentPoint, nextPoint);
+                creature.CurrentPosition = nextPoint;
+            }
         }
 
         public override string ToString()

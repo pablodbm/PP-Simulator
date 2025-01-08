@@ -37,6 +37,18 @@
             return new Point(newX, newY);
         }
 
+        public void MoveCreature(Creature creature, Direction direction)
+        {
+            if (creature.CurrentMap != this)
+                throw new InvalidOperationException("The creature is not on this map.");
+
+            var currentPoint = creature.CurrentPosition;
+            var nextPoint = Next(currentPoint, direction);
+
+            Move(creature, currentPoint, nextPoint);
+            creature.CurrentPosition = nextPoint;
+        }
+
         public override string ToString()
         {
             return $"SmallTorusMap with size {SizeX}x{SizeY}";

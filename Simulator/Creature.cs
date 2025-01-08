@@ -1,10 +1,15 @@
-﻿namespace Simulator;
+﻿using Simulator.Maps;
+
+namespace Simulator;
 
 public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
-    private bool _nameInitialized = false;
+
+    public Map? CurrentMap { get; set; }
+    public Point? Position { get; private set; }
+    public Point CurrentPosition { get; set; }
 
     public abstract int Power { get; }
     public string Name
@@ -12,26 +17,20 @@ public abstract class Creature
         get => _name;
         set
         {
-
             value = Validator.Shortener(value, 3, 25);
-
             _name = value;
-            _nameInitialized = true;
         }
     }
 
     public int Level
     {
         get => _level;
-        set
-        {
-            _level = Validator.Limiter(value, 1 ,10);
-        }
+        set => _level = Validator.Limiter(value, 1, 10);
     }
 
     public Creature(string name, int level = 1)
     {
-        Name = name; 
+        Name = name;
         Level = level;
     }
 
@@ -48,27 +47,30 @@ public abstract class Creature
 
     public void Upgrade()
     {
-        if(Level < 10)
+        if (Level < 10)
         {
             Level++;
         }
     }
 
-    public string Go(Direction direction)
+    public void AssignToMap(Map map, Point initialPosition)
     {
-        return $"{direction.ToString().ToLower()}";
+        if (!map.Exist(initialPosition))
+            throw new ArgumentException("Invalid position on the map.");
+
+        CurrentMap = map;
+        Position = initialPosition;
+        map.Add(this, initialPosition);
     }
 
-    public void Go(List<Direction> directions)
+    public void Go(Direction direction)
     {
-        foreach (var direction in directions)
-        {
-            Go(direction);
-        }
-    }
-    public void Go(string directionsString)
-    {
-        var directions = DirectionParser.Parse(directionsString);
-        Go(directions);
+        if (CurrentMap == null || Position == null)
+            throw new InvalidOperationException("Creature is not assigned to a map.");
+
+        var newPosition = CurrentMap.Next(Position.Value, direction);
+
+        CurrentMap.Move(this, Position.Value, newPosition);
+        Position = newPosition;
     }
 }
