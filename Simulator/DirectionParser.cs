@@ -2,7 +2,7 @@
 
 public static class DirectionParser
 {
-    public static Direction[] Parse(string directionsString)
+    public static List<Direction> Parse(string directionsString)
     {
         var directionsList = new List<Direction>();
 
@@ -23,6 +23,6 @@ public static class DirectionParser
             }
         }
 
-        return directionsList.ToArray();
+        return directionsList;
     }
 }

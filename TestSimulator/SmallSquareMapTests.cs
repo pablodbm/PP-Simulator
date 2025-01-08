@@ -1,5 +1,5 @@
-﻿using Simulator.Maps;
-using Simulator;
+﻿using Simulator;
+using Simulator.Maps;
 
 namespace TestSimulator;
 
@@ -10,7 +10,8 @@ public class SmallSquareMapTests
     {
         int size = 10;
         var map = new SmallSquareMap(size);
-        Assert.Equal(size, map.Size);
+        Assert.Equal(size, map.SizeX);
+        Assert.Equal(size, map.SizeY);
     }
 
     [Theory]

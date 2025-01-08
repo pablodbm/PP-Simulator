@@ -13,15 +13,15 @@ public class SmallTorusMapTests
         // Act
         var map = new SmallTorusMap(size);
         // Assert
-        Assert.Equal(size, map.Size);
+        Assert.Equal(size, map.SizeX);
+        Assert.Equal(size, map.SizeY);
     }
 
     [Theory]
     [InlineData(4)]
     [InlineData(21)]
-    public void
-        Constructor_InvalidSize_ShouldThrowArgumentOutOfRangeException
-        (int size)
+    public void Constructor_InvalidSize_ShouldThrowArgumentOutOfRangeException
+    (int size)
     {
         // Act & Assert
         // The way to check if method throws anticipated exception:

@@ -59,7 +59,7 @@ public abstract class Creature
         return $"{direction.ToString().ToLower()}";
     }
 
-    public void Go(Direction[] directions)
+    public void Go(List<Direction> directions)
     {
         foreach (var direction in directions)
         {

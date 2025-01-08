@@ -1,53 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simulator.Maps;
-public class SmallTorusMap : Map
+﻿namespace Simulator.Maps
 {
-    public int Size { get; }
-
-    public SmallTorusMap(int size)
+    public class SmallTorusMap : SmallMap
     {
-        if (size < 5 || size > 20)
-            throw new ArgumentOutOfRangeException(nameof(size), "Size must be between 5 and 20.");
-        Size = size;
-    }
-
-    public override bool Exist(Point p)
-    {
-        return p.X >= 0 && p.X < Size && p.Y >= 0 && p.Y < Size;
-    }
-
-    public override Point Next(Point p, Direction d)
-    {
-        int newX = p.X, newY = p.Y;
-
-        switch (d)
+        public SmallTorusMap(int size)
+            : base(size, size)
         {
-            case Direction.Up: newY = (p.Y + 1) % Size; break;
-            case Direction.Down: newY = (p.Y - 1 + Size) % Size; break;
-            case Direction.Left: newX = (p.X - 1 + Size) % Size; break;
-            case Direction.Right: newX = (p.X + 1) % Size; break;
         }
 
-        return new Point(newX, newY);
-    }
-
-    public override Point NextDiagonal(Point p, Direction d)
-    {
-        int newX = p.X, newY = p.Y;
-
-        switch (d)
+        public override Point Next(Point p, Direction d)
         {
-            case Direction.Up: newX = (p.X + 1) % Size; newY = (p.Y + 1) % Size; break;
-            case Direction.Down: newX = (p.X - 1 + Size) % Size; newY = (p.Y - 1 + Size) % Size; break;
-            case Direction.Left: newX = (p.X - 1 + Size) % Size; newY = (p.Y + 1) % Size; break;
-            case Direction.Right: newX = (p.X + 1) % Size; newY = (p.Y - 1 + Size) % Size; break;
+            int newX = p.X, newY = p.Y;
+
+            switch (d)
+            {
+                case Direction.Up: newY = (p.Y + 1) % SizeY; break;
+                case Direction.Down: newY = (p.Y - 1 + SizeY) % SizeY; break;
+                case Direction.Left: newX = (p.X - 1 + SizeX) % SizeX; break;
+                case Direction.Right: newX = (p.X + 1) % SizeX; break;
+            }
+
+            return new Point(newX, newY);
         }
 
-        return new Point(newX, newY);
+        public override Point NextDiagonal(Point p, Direction d)
+        {
+            int newX = p.X, newY = p.Y;
+
+            switch (d)
+            {
+                case Direction.Up: newX = (p.X + 1) % SizeX; newY = (p.Y + 1) % SizeY; break;
+                case Direction.Down: newX = (p.X - 1 + SizeX) % SizeX; newY = (p.Y - 1 + SizeY) % SizeY; break;
+                case Direction.Left: newX = (p.X - 1 + SizeX) % SizeX; newY = (p.Y + 1) % SizeY; break;
+                case Direction.Right: newX = (p.X + 1) % SizeX; newY = (p.Y - 1 + SizeY) % SizeY; break;
+            }
+
+            return new Point(newX, newY);
+        }
+
+        public override string ToString()
+        {
+            return $"SmallTorusMap with size {SizeX}x{SizeY}";
+        }
     }
 }
