@@ -14,13 +14,13 @@ internal class Program
     {
         try
         {
-            
+
             Rectangle rect1 = new Rectangle(1, 2, 5, 6);
             Console.WriteLine(rect1);
             Point p1 = new Point(3, 4);
             Console.WriteLine($"Point {p1} inside rect1: {rect1.Contains(p1)}");
 
-            
+
             Point p2 = new Point(0, 0);
             Point p3 = new Point(10, 10);
             Rectangle rect2 = new Rectangle(p2, p3);
@@ -28,7 +28,7 @@ internal class Program
             Point p4 = new Point(5, 5);
             Console.WriteLine($"Point {p4} inside rect2: {rect2.Contains(p4)}");
 
-            
+
             Rectangle rect3 = new Rectangle(1, 2, 1, 5);
         }
         catch (ArgumentException ex)

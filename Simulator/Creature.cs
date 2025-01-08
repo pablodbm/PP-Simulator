@@ -44,7 +44,7 @@ public abstract class Creature
         return $"{GetType().Name.ToUpper()}: {Info}";
     }
 
-    public abstract void SayHi();
+    public abstract string Greeting();
 
     public void Upgrade()
     {
@@ -54,10 +54,9 @@ public abstract class Creature
         }
     }
 
-    public void Go(Direction direction)
+    public string Go(Direction direction)
     {
-        string directionText = direction.ToString().ToLower();
-        Console.WriteLine($"{Name} goes {directionText}.");
+        return $"{direction.ToString().ToLower()}";
     }
 
     public void Go(Direction[] directions)
