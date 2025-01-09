@@ -64,8 +64,6 @@ public class Simulation
         if (string.IsNullOrEmpty(moves))
             throw new ArgumentException("Moves cannot be null or empty.");
 
-        if (moves.Length != creatures.Count)
-            throw new ArgumentException("Moves list length must match number of creatures.");
 
         Map = map;
         Creatures = creatures;
