@@ -37,6 +37,7 @@ public abstract class Creature : IMappable
     public Creature() { }
 
     public abstract string Info { get; }
+    public abstract char Symbol { get; }
 
     public override string ToString()
     {

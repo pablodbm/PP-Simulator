@@ -1,49 +1,76 @@
 ﻿using SimConsole;
-using Simulator.Maps;
 using Simulator;
+using Simulator.Maps;
 
-namespace SimConsole;
-
-class Program
+namespace SimConsole
 {
-    static void Main(string[] args)
+    class Program
     {
-        try
+        static void Main(string[] args)
         {
-            SmallSquareMap map = new SmallSquareMap(5);
-
-            List<IMappable> creatures = new List<IMappable>
-                {
-                    new Orc { Name = "Gorbag" },
-                    new Elf { Name = "Elandor" }
-                };
-
-            List<Point> positions = new List<Point>
-                {
-                    new Point(1, 1),
-                    new Point(2, 1)
-                };
-
-            string moves = "rrdd";
-
-            Simulation simulation = new Simulation(map, creatures, positions, moves);
-
-            MapVisualizer mapVisualizer = new MapVisualizer(map);
-
-            mapVisualizer.Draw();
-
-            foreach (char move in moves)
+            try
             {
-                Console.WriteLine("Press Enter to make the next move...");
-                while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+                TorusMap map = new(8, 6);
 
-                simulation.Turn();
-                mapVisualizer.Draw();
+                List<IMappable> mappables = new List<IMappable>
+                {
+                    new Elf("Elandor"),
+                    new Orc("Gorbag"),
+                    new Rabbit("Rabbit1"),
+                    new Rabbit("Rabbit2"),
+                    new FlyingBird("Eagle1"),
+                    new FlyingBird("Eagle2"),
+                    new NonFlyingBird("Ostrich1"),
+                    new NonFlyingBird("Ostrich2")
+                };
+
+                List<Point> positions = new List<Point>
+                {
+                    new Point(2, 2),
+                    new Point(3, 1),
+                    new Point(1, 1),
+                    new Point(4, 4),
+                    new Point(5, 0),
+                    new Point(0, 5),
+                    new Point(3, 3),
+                    new Point(6, 2)
+                };
+
+                for (int i = 0; i < mappables.Count; i++)
+                {
+                    mappables[i].AssignToMap(map, positions[i]);
+                }
+
+                string moves = "dlrludlrludlru";
+
+                Simulation simulation = new(map, mappables, positions, moves);
+
+                MapVisualizer mapVisualizer = new(simulation.Map);
+
+                foreach (char move in moves)
+                {
+                    Direction direction = move switch
+                    {
+                        'u' => Direction.Up,
+                        'd' => Direction.Down,
+                        'l' => Direction.Left,
+                        'r' => Direction.Right,
+                        _ => throw new ArgumentException("Invalid move.")
+                    };
+
+                    foreach (var mappable in mappables)
+                    {
+                        mappable.Go(direction);
+                    }
+
+                    mapVisualizer.Draw();
+                    Console.ReadLine();
+                }
             }
-        }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
     }
 }

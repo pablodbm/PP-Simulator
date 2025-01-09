@@ -40,4 +40,5 @@ public class Elf : Creature
         }
     }
     public override int Power => 8 * Level + 2 * Agility;
+    public override char Symbol => 'E';
 }

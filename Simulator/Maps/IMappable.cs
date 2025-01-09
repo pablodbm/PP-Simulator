@@ -13,4 +13,5 @@ public interface IMappable
 
     void AssignToMap(Map map, Point initialPosition);
     void Go(Direction direction);
+    char Symbol { get; }
 }
