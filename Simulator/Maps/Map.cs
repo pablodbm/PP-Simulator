@@ -9,7 +9,7 @@ public abstract class Map
     public int SizeX { get; }
     public int SizeY { get; }
 
-    private readonly Dictionary<Point, List<Creature>> _creaturePositions;
+    private readonly Dictionary<Point, List<IMappable>> _creaturePositions;
 
     protected Map(int sizeX, int sizeY)
     {
@@ -18,7 +18,7 @@ public abstract class Map
 
         SizeX = sizeX;
         SizeY = sizeY;
-        _creaturePositions = new Dictionary<Point, List<Creature>>();
+        _creaturePositions = new Dictionary<Point, List<IMappable>>();
     }
 
     /// <summary>
@@ -30,14 +30,14 @@ public abstract class Map
         return p.X >= 0 && p.X < SizeX && p.Y >= 0 && p.Y < SizeY;
     }
 
-    public virtual void Add(Creature creature, Point point)
+    public virtual void Add(IMappable creature, Point point)
     {
         if (!Exist(point))
             throw new ArgumentOutOfRangeException("Point is outside the map boundaries.");
 
         if (!_creaturePositions.ContainsKey(point))
         {
-            _creaturePositions[point] = new List<Creature>();
+            _creaturePositions[point] = new List<IMappable>();
         }
 
         _creaturePositions[point].Add(creature);
@@ -45,7 +45,7 @@ public abstract class Map
         creature.CurrentPosition = point;
     }
 
-    public virtual void Remove(Creature creature, Point point)
+    public virtual void Remove(IMappable creature, Point point)
     {
         if (_creaturePositions.ContainsKey(point))
         {
@@ -57,7 +57,7 @@ public abstract class Map
         }
     }
 
-    public virtual void Move(Creature creature, Point from, Point to)
+    public virtual void Move(IMappable creature, Point from, Point to)
     {
         if (!Exist(to))
             throw new ArgumentOutOfRangeException("Destination point is outside the map boundaries.");
@@ -66,12 +66,12 @@ public abstract class Map
         Add(creature, to);
     }
 
-    public virtual List<Creature> At(Point point)
+    public virtual List<IMappable> At(Point point)
     {
-        return _creaturePositions.TryGetValue(point, out var creatures) ? creatures : new List<Creature>();
+        return _creaturePositions.TryGetValue(point, out var creatures) ? creatures : new List<IMappable>();
     }
 
-    public virtual List<Creature> At(int x, int y)
+    public virtual List<IMappable> At(int x, int y)
     {
         return At(new Point(x, y));
     }

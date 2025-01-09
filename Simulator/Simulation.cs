@@ -13,7 +13,7 @@ public class Simulation
     /// <summary>
     /// Creatures moving on the map.
     /// </summary>
-    public List<Creature> Creatures { get; }
+    public List<IMappable> Creatures { get; }
 
     /// <summary>
     /// Starting positions of creatures.
@@ -39,7 +39,7 @@ public class Simulation
     /// <summary>
     /// Creature which will be moving current turn.
     /// </summary>
-    public Creature CurrentCreature => Creatures[_currentTurnIndex];
+    public IMappable CurrentCreature => Creatures[_currentTurnIndex];
 
     /// <summary>
     /// Lowercase name of direction which will be used in current turn.
@@ -53,7 +53,7 @@ public class Simulation
     /// if number of creatures differs from 
     /// number of starting positions.
     /// </summary>
-    public Simulation(Map map, List<Creature> creatures, List<Point> positions, string moves)
+    public Simulation(Map map, List<IMappable> creatures, List<Point> positions, string moves)
     {
         if (creatures == null || creatures.Count == 0)
             throw new ArgumentException("Creatures list cannot be empty.");

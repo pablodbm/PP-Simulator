@@ -2,7 +2,7 @@
 
 namespace Simulator;
 
-public abstract class Creature
+public abstract class Creature : IMappable
 {
     private string _name = "Unknown";
     private int _level = 1;

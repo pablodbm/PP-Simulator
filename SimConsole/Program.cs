@@ -12,7 +12,7 @@ class Program
         {
             SmallSquareMap map = new SmallSquareMap(5);
 
-            List<Creature> creatures = new List<Creature>
+            List<IMappable> creatures = new List<IMappable>
                 {
                     new Orc { Name = "Gorbag" },
                     new Elf { Name = "Elandor" }
