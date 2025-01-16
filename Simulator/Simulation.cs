@@ -78,14 +78,8 @@ public class Simulation
         }
     }
 
-    /// <summary>
-    /// Makes one move of current creature in current direction.
-    /// Throw error if simulation is finished.
-    /// </summary>
-    public void Turn()
+    public IMappable Turn()
     {
-        if (Finished)
-            throw new InvalidOperationException("Simulation has finished. No further moves can be made.");
         var currentMove = Moves[_currentTurnIndex].ToString().ToLower();
         List<Direction> directions = DirectionParser.Parse(currentMove);
 
@@ -95,11 +89,15 @@ public class Simulation
         }
 
         Direction direction = directions.First();
-        var currentPosition = Creatures[_currentTurnIndex].CurrentPosition;
-        var nextPosition = Map.Next(currentPosition, direction);
-        Map.Move(Creatures[_currentTurnIndex], currentPosition, nextPosition);
-        _currentTurnIndex++;
 
+        var currentCreature = Creatures[_currentTurnIndex];
+        var currentPosition = currentCreature.CurrentPosition;
+
+        var nextPosition = Map.Next(currentPosition, direction);
+
+        Map.Move(currentCreature, currentPosition, nextPosition);
+
+        _currentTurnIndex++;
         if (_currentTurnIndex >= Creatures.Count)
         {
             _currentTurnIndex = 0;
@@ -109,6 +107,8 @@ public class Simulation
         {
             Finished = true;
         }
+
+        return currentCreature;
     }
 
 }

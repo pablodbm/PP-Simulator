@@ -92,4 +92,9 @@ public abstract class Map
     /// <param name="d">Direction.</param>
     /// <returns>Next point.</returns>
     public abstract Point NextDiagonal(Point p, Direction d);
+
+    public Dictionary<Point, List<IMappable>> AllMappables()
+    {
+        return new Dictionary<Point, List<IMappable>>(_creaturePositions);
+    }
 }
