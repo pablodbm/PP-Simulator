@@ -65,7 +65,7 @@ public class SimulationHistory
 
                 if (objectsAtPoint.Any())
                 {
-                    var symbol = objectsAtPoint.First().Symbol; // Wyświetlanie pierwszego obiektu
+                    var symbol = objectsAtPoint.First().Symbol;
                     symbols[point] = symbol;
                 }
             }
