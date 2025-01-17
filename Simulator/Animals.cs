@@ -35,7 +35,11 @@ public class Animals : IMappable
 
     public virtual string Info => $"{Description} <{Size}>";
 
-    string IMappable.Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    string IMappable.Name
+    {
+        get => Name;
+        set => name = value;
+    }
 
     public override string ToString()
     {

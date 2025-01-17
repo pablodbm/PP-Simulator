@@ -45,6 +45,7 @@ public class Simulation
     /// Lowercase name of direction which will be used in current turn.
     /// </summary>
     public string CurrentMoveName => Moves[_currentTurnIndex].ToString().ToLower();
+    public int TurnIndex => _currentTurnIndex;
 
     /// <summary>
     /// Simulation constructor.
@@ -110,5 +111,20 @@ public class Simulation
 
         return currentCreature;
     }
+    public void NextTurn()
+    {
+        if (_currentTurnIndex < Moves.Length - 1)
+        {
+            _currentTurnIndex++;
+        }
+    }
 
+    public void PreviousTurn()
+    {
+        if (_currentTurnIndex > 0)
+        {
+            _currentTurnIndex--;
+        }
+    
+    }
 }

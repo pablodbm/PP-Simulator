@@ -1,0 +1,101 @@
+﻿@page
+@model SimWeb.Pages.SimulationModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        td {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+            td.empty {
+                background-color: #f9f9f9;
+            }
+
+            td.B {
+                background-color: #ffcccb;
+            }
+
+            td.A {
+                background-color: #ffeb3b;
+            }
+
+            td.O {
+                background-color: #8bc34a;
+            }
+
+            td.E {
+                background-color: #2196f3;
+            }
+
+            td.b {
+                background-color: #9e9e9e;
+            }
+    </style>
+</head>
+<body>
+    <h1>Simulation</h1>
+
+    <h3>Turn: @Model.Turn</h3>
+    <h3>Max Turn: @Model.MaxTurn</h3>
+    <div class="d-flex justify-content-center my-4">
+        <a href="/Simulation?handler=Previous" class="button-link @(Model.Turn == 0 ? "disabled" : "")">
+            &larr; Previous
+        </a>
+
+        <a href="/Simulation?handler=Next" class="button-link @(Model.Turn == Model.MaxTurn ? "disabled" : "")">
+            Next &rarr;
+        </a>
+    </div>
+
+    <table>
+        @if (Model.Symbols != null)
+        {
+            @for (int y = 0; y < 6; y++)
+            {
+                <tr>
+                    @for (int x = 0; x < 8; x++)
+                    {
+                        <td class="@(Model.Symbols.ContainsKey(new Point(x, y)) ? Model.Symbols[new Point(x, y)].ToString() : "empty")">
+                            @if (Model.Symbols.ContainsKey(new Point(x, y)))
+                            {
+                                @Model.Symbols[new Point(x, y)]
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="8">Symbols not yet loaded.</td></tr>
+        }
+    </table>
+</body>
+</html>
