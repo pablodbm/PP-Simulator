@@ -6,7 +6,9 @@ public class FlyingBird : Animals
 {
     public override char Symbol => 'B';
 
-    public FlyingBird(string name) : base(name) { }
+    public FlyingBird(string name) : base(name) {
+        Description = name;
+    }
 
     public override void Go(Direction direction)
     {

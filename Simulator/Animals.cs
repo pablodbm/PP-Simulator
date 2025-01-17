@@ -39,7 +39,7 @@ public class Animals : IMappable
 
     public override string ToString()
     {
-        return $"{GetType().Name.ToUpper()}: {Info}";
+        return $"{GetType().Name.ToUpper()}: {Description} <{Size}>";
     }
     public void AssignToMap(Map map, Point initialPosition)
     {

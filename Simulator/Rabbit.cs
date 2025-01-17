@@ -5,7 +5,11 @@ public class Rabbit : Animals
 {
     public override char Symbol => 'A';
 
-    public Rabbit(string name) : base(name) { }
+    public Rabbit(string name) : base(name)
+    {
+        Description = name;
+    }
+
 
     public override void Go(Direction direction)
     {
